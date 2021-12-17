@@ -524,7 +524,7 @@ def test_le():
     with pytest.raises(AttributeError):
         EngUnit('220kohm') >= 219000
     with pytest.raises(AttributeError):
-        219000 >= EngUnit('220kohm')
+        EngUnit('220kohm') <= 219000
 
     # negative_numbers
     assert EngUnit('-220kohm') >= EngUnit('-221000ohm')
@@ -533,7 +533,7 @@ def test_le():
     with pytest.raises(AttributeError):
         EngUnit('-220kohm') <= -219000
     with pytest.raises(AttributeError):
-        -219000 <= EngUnit('-220kohm')
+        EngUnit('-220kohm') >= -219000
 
 
 def test_to_int():

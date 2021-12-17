@@ -55,12 +55,15 @@ class EngUnit:
             new_value = ''
             v_index = 0
             for c in value:
-                if (c in digits) or (c in ['.', '-']) or (c in suffix_keys):
-                    new_value += c
-                    v_index += 1
-                else:
+                if (
+                    c not in digits
+                    and c not in ['.', '-']
+                    and c not in suffix_keys
+                ):
                     break
 
+                new_value += c
+                v_index += 1
             if len(value) >= v_index:
                 self.unit = value[v_index:]
 
@@ -74,7 +77,7 @@ class EngUnit:
         Returns the object representation
         :return: a string representing the engineering number
         """
-        unit = self.unit if self.unit else ''
+        unit = self.unit or ''
         return str(self.eng_num) + unit
 
     def __str__(self):
@@ -360,9 +363,8 @@ class EngNumber:
             base = base.rstrip('.')
 
         # remove trailing .00 in precision 2
-        if self.precision == 2 and self.significant == 0:
-            if '.00' in base:
-                base = base[:-3]
+        if self.precision == 2 and self.significant == 0 and '.00' in base:
+            base = base[:-3]
 
         return base + _exponent_lookup_scaled[exponent]
 
